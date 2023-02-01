@@ -1,4 +1,4 @@
-import { Navbar as NextUINavbar, Text, Button, Link } from "@nextui-org/react";
+import { Navbar as NextUINavbar, Text } from "@nextui-org/react";
 
 
 export const Navbar = () => {

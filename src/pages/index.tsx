@@ -4,8 +4,8 @@ import { Layout } from '@/layouts'
 
 const HomePage: NextPage = () => {
   return (
-    <Layout text='hello'>
-      <Button color="gradient"  >
+    <Layout title="Listado de Pokémon">
+      <Button color="gradient">
         Im a button
       </Button>
     </Layout>
