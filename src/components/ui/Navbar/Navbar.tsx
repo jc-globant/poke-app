@@ -8,7 +8,7 @@ export const Navbar = () => {
     const { asPath } = useRouter();
 
     return (
-        <NextUINavbar variant={"static"}>
+        <NextUINavbar variant={"sticky"}>
             <NextUINavbar.Brand>
                 <PokeBrand />
             </NextUINavbar.Brand>
