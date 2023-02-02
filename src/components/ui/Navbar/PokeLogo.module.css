@@ -1,0 +1,40 @@
+.pokeball {
+    margin-right: 10px;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(to bottom,
+            #e53935,
+            #e53935 48%,
+            #212121 48%,
+            #212121 55%,
+            #fff 55%);
+    border-radius: 50%;
+    border: 3px solid #212121;
+}
+
+.pokeball:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 5px;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+}
+
+.pokeball:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid #212121;
+}
