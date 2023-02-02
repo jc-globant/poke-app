@@ -1,4 +1,5 @@
 import { FC, PropsWithChildren } from 'react'
+import { Container, Card, Row, Text } from "@nextui-org/react";
 import Head from "next/head"
 import { Navbar } from "@/components/ui"
 
@@ -16,11 +17,11 @@ export const Layout: FC<PropsWithChildren<Props>> = ({ children, title }) => {
                 <meta name="keywords" content="XXXX, pokemon, pokedex" />
             </Head>
             <Navbar />
-            <main>
+            <Container as='main' lg>
                 {
                     children
                 }
-            </main>
+            </Container>
         </>
     )
 }
