@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react'
-import { Container, Card, Row, Text } from "@nextui-org/react";
+import { Container, Card, Row, Text, Spacer } from "@nextui-org/react";
 import Head from "next/head"
 import { Navbar } from "@/components/ui"
 
