@@ -19,8 +19,15 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                 <Grid xs={12} sm={4}>
                     <Card isHoverable css={{ padding: '30px' }}>
                         <Card.Body>
-                            <Card.Image
+                            {/* <Card.Image
                                 src={imageSrc}
+                                alt={pokemon.name}
+                                width={200}
+                                height={200}
+                                objectFit={"cover"}
+                            /> */}
+                            <Card.Image
+                                src={'/image.jpeg'}
                                 alt={pokemon.name}
                                 width={200}
                                 height={200}
