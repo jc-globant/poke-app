@@ -11,7 +11,7 @@ interface Props {
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
-    const imageSrc = pokemon.sprites.versions?.['generation-v']['black-white'].animated?.front_default || '/no-image.png';
+    const imageSrc = pokemon.sprites.other?.home.front_default || '/no-image.png';
 
     return (
         <Layout title={`Pokémon App | ${pokemon.name}`}>
