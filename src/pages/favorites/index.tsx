@@ -1,16 +1,22 @@
 import { NextPage } from 'next';
 import { Layout } from '@/layouts';
-import { Button, Grid } from '@nextui-org/react';
+import { useState, useEffect } from 'react';
+import { NoFavorites, FavoritePokemons } from '@/components/ui/';
+import { localFavorites } from '@/utils';
 
 const Favorites: NextPage = () => {
 
+    const [favorites, setFavorites] = useState<number[]>([]);
+
+    useEffect(() => {
+        setFavorites(localFavorites.getFavorites())
+    }, [])
+
     return (
         <Layout>
-            <Grid.Container gap={10}>
-
-                <Button css={{ marginTop: 80 }} color="error" flat onClick={() => alert("haz sido hackeada bb 👀")}> Cica es mi pokemon favorito ❤️</Button>
-            </Grid.Container>
-
+            {
+                favorites.length === 0 ? <NoFavorites /> : <FavoritePokemons favorites={favorites} />
+            }
         </Layout>
     )
 

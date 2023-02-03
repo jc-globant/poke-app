@@ -1,8 +1,10 @@
-import { Layout } from '../../components/layouts/Layout';
+import { useState, useEffect } from 'react';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { Text, Grid, Card, Button, Container, Image } from '@nextui-org/react';
+import { Layout } from '../../components/layouts/Layout';
 import pokeApi from '@/api/pokeApi';
 import { Pokemon, PokemonListResponse } from '@/interfaces';
-import { Text, Grid, Card, Button, Container, Image } from '@nextui-org/react';
+import { localFavorites } from '@/utils';
 
 interface Props {
     pokemon: Pokemon
@@ -11,7 +13,19 @@ interface Props {
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
+    const [isInfavorites, setIsFavorites] = useState(false);
+
     const imageSrc = pokemon.sprites.other?.home.front_default || '/no-image.png';
+
+    const onToggleFavorite = () => {
+        localFavorites.toggleFavorite(pokemon.id);
+        setIsFavorites(!isInfavorites)
+    }
+
+    useEffect(() => {
+        setIsFavorites(localFavorites.isPokemonFavorite(pokemon.id))
+    }, [pokemon.id])
+
 
     return (
         <Layout title={`Pokémon App | ${pokemon.name}`}>
@@ -20,26 +34,31 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                     <Card isHoverable css={{ padding: '30px' }}>
                         <Card.Body>
                             <Card.Image
+                                width={150}
+                                height={150}
                                 src={imageSrc}
                                 alt={pokemon.name}
-                                width={200}
-                                height={200}
-                                objectFit={"cover"}
                             />
                         </Card.Body>
                     </Card>
                 </Grid>
                 <Grid xs={12} sm={8}>
                     <Card>
-                        <Card.Header css={{ display: 'flex', justifyContent: "space-between" }}>
-                            <Text h2 transform='capitalize'>{pokemon.name}</Text>
-                            <Button color="error" flat ripple>
-                                Save to favorites
+                        <Card.Header css={{ display: "flex", justifyContent: "space-between", flexFlow: "column" }}>
+                            <Text h2 transform="capitalize">{pokemon.name}</Text>
+                            <Button
+                                color="error"
+                                flat={!isInfavorites}
+                                rounded
+                                onPress={onToggleFavorite}
+                                size="xs"
+                            >
+                                {!isInfavorites ? "♡" : "♥"}
                             </Button>
                         </Card.Header>
                         <Card.Body>
                             <Text size={30}>Sprites:</Text>
-                            <Container direction='row' display='flex'>
+                            <Container direction="row" display="flex">
                                 <Image
                                     src={pokemon.sprites.front_default}
                                     alt={pokemon.name}
