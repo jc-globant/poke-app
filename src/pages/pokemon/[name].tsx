@@ -18,7 +18,7 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
     const imageSrc = pokemon.sprites.other?.home.front_default || '/no-image.png';
 
     const onToggleFavorite = () => {
-        localFavorites.toggleFavorite(pokemon.id);
+        localFavorites.toggleFavorite({ id: pokemon.id, name: pokemon.name });
         setIsFavorites(!isInfavorites)
     }
 
