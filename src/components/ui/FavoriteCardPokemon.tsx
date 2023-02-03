@@ -11,7 +11,10 @@ interface Props {
 export const FavoriteCardPokemon = ({ pokemon: { name, id } }: Props) => {
     const router = useRouter();
 
-    const handlePress = () => router.push(`/pokemon/${name}`)
+    const handlePress = () => {
+        console.log('pressing')
+        router.push(`/pokemon/${name}`)
+    }
 
     return (
         <Card
