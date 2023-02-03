@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { Text, Grid, Card, Button, Container, Image } from '@nextui-org/react';
 import { Layout } from '../../components/layouts/Layout';
+import confetti from 'canvas-confetti';
 import pokeApi from '@/api/pokeApi';
 import { Pokemon, PokemonListResponse } from '@/interfaces';
 import { localFavorites } from '@/utils';
@@ -13,17 +14,29 @@ interface Props {
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
-    const [isInfavorites, setIsFavorites] = useState(false);
+    const [isInfavorite, setIsFavorite] = useState(false);
 
     const imageSrc = pokemon.sprites.other?.home.front_default || '/no-image.png';
 
     const onToggleFavorite = () => {
         localFavorites.toggleFavorite({ id: pokemon.id, name: pokemon.name });
-        setIsFavorites(!isInfavorites)
+        setIsFavorite(!isInfavorite)
+        if (!isInfavorite) {
+            confetti({
+                zIndex: 999,
+                particleCount: 100,
+                spread: 160,
+                angle: -100,
+                origin: {
+                    x: 1,
+                    y: 0
+                }
+            })
+        }
     }
 
     useEffect(() => {
-        setIsFavorites(localFavorites.isPokemonFavorite(pokemon.id))
+        setIsFavorite(localFavorites.isPokemonFavorite(pokemon.id))
     }, [pokemon.id])
 
 
@@ -48,12 +61,12 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                             <Text h2 transform="capitalize">{pokemon.name}</Text>
                             <Button
                                 color="error"
-                                flat={!isInfavorites}
+                                flat={!isInfavorite}
                                 rounded
                                 onPress={onToggleFavorite}
                                 size="xs"
                             >
-                                {!isInfavorites ? "♡" : "♥"}
+                                {!isInfavorite ? "♡" : "♥"}
                             </Button>
                         </Card.Header>
                         <Card.Body>
