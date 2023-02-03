@@ -1,4 +1,5 @@
 import { Card, Grid } from "@nextui-org/react"
+import { FavoriteCardPokemon } from "./FavoriteCardPokemon"
 
 interface Props {
     favorites: number[]
@@ -11,9 +12,7 @@ export const FavoritePokemons = ({ favorites }: Props) => {
         {
             favorites.map(id => (
                 <Grid xs={12} sm={4} md={3} key={id}>
-                    <Card isHoverable isPressable css={{ padding: 10 }}>
-                        <Card.Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`} />
-                    </Card>
+                    <FavoriteCardPokemon id={id} />
                 </Grid>
             ))
         }
