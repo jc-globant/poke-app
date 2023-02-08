@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { useState, useEffect } from 'react';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { Text, Grid, Card, Button, Container, Image } from '@nextui-org/react';
@@ -5,12 +6,11 @@ import { Layout } from '../../components/layouts/Layout';
 import confetti from 'canvas-confetti';
 import pokeApi from '@/api/pokeApi';
 import { Pokemon, PokemonListResponse } from '@/interfaces';
-import { localFavorites } from '@/utils';
+import { pokeJSON, localFavorites, getPokemonInfo } from '@/utils';
 
 interface Props {
     pokemon: Pokemon
 }
-
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
@@ -120,25 +120,39 @@ export const getStaticPaths: GetStaticPaths = async () => {
         paths: names.map((name) => ({
             params: { name }
         })),
-        fallback: false //Retornara un 404 si el path no esta definido
+        //fallback: false //Retornara un 404 si el path no esta definido
+        fallback: 'blocking'//Esto es necesario para generar paginas por demanda 
     }
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
+
     const { name } = ctx.params as { name: string };
-    const { data } = await pokeApi<Pokemon>(`/pokemon/${name}`);
 
-    const pokemon = {
-        id: data.id,
-        name: data.name,
-        sprites: data.sprites
-    };
+    const pokemon = await getPokemonInfo(name);
 
+    if (!pokemon) {
+        // Si no encuentra el pokemon se redige al home
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
+    if (pokeJSON.shouldSaveToJson(pokemon, fs)) {
+        pokeJSON.savePokemon(pokemon, fs)
+    }
+
+    // Si encuentra el pokemon y no se ha generado la pagina se creará para servirla de forma estatica
     return {
         props: {
             pokemon
-        }
+        },
+        revalidate: 1,//Se vuelve a revalidar cada 24h, es como si se creara un nuevo build para obtener las paginas
     }
+
 }
 
 
