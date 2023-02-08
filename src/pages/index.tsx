@@ -25,13 +25,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const { data } = await pokeApi<PokemonListResponse>('/pokemon?limit=151');
 
   const pokemons: SmallPokemon[] = data.results.map(parsePokemonFromApi);
-
-  const pokemonsFromJSON: SmallPokemon[] = pokeJSON.readPokemonsFromJSON(fs).map((p) => ({
-    id: p.id.toLocaleString(),
-    img: p.sprites.versions?.['generation-v']['black-white'].animated?.front_default || "",
-    name: p.name,
-    url: ""
-  }))
+  const pokemonsFromJSON = pokeJSON.parseJSONToSmallPokemon(fs);
 
   return {
     props: {

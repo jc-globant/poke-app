@@ -141,9 +141,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
         }
     }
 
-    // if (pokeJSON.shouldSaveToJson(pokemon, fs)) {
-    pokeJSON.savePokemon(pokemon, fs)
-    // }
+    if (pokeJSON.shouldSaveToJson(pokemon, fs)) {
+        pokeJSON.savePokemon(pokemon, fs)
+    }
 
     // Si encuentra el pokemon y no se ha generado la pagina se creará para servirla de forma estatica
     return {
