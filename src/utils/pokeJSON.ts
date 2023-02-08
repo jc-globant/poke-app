@@ -1,7 +1,7 @@
 
 import { PokeWithSprite } from "./getPokemonInfo";
 
-const readPokemonsFromJSON = (fs: any): PokeWithSprite[] => JSON.parse(fs.readFileSync('./pokeRequest.json', 'utf-8')) || [];
+const readPokemonsFromJSON = (fs: any): PokeWithSprite[] => JSON.parse(fs.readFileSync("./temp/pokeRequest.json", 'utf-8')) || []
 
 const shouldSaveToJson = (pokemonToSave: PokeWithSprite, fs: any) => {
     if (pokemonToSave.id < 151) {
@@ -22,7 +22,7 @@ const shouldSaveToJson = (pokemonToSave: PokeWithSprite, fs: any) => {
 export const savePokemon = (pokemon: PokeWithSprite, fs: any) => {
     const pokemons = readPokemonsFromJSON(fs);
     pokemons.push(pokemon)
-    fs.writeFileSync('./pokeRequest.json', JSON.stringify(pokemons));
+    fs.writeFileSync("./temp/pokeRequest.json", JSON.stringify(pokemons))
 }
 
 
