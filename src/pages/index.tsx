@@ -30,8 +30,8 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       pokemons: [...pokemons, ...pokemonsFromJSON],
-      revalidate: 10,
-    }
+    },
+    revalidate: 1000
   }
 }
 
